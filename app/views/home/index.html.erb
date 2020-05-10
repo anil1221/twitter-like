@@ -1,0 +1,22 @@
+<% if user_signed_in? %>
+  <%= link_to 'logout', destroy_user_session_path, method: :delete %>
+<% end %>
+<h1>Tweets</h1>
+<% @tweets.each do |tweet| %>
+  <div>
+    <%= link_to tweet.user.email, user_path(tweet.user.id) %> <br>
+    <%= tweet.content %>
+  </div> <br>
+<% end %>
+
+<h1>Follow Suggestions</h1>
+<% current_user.follow_suggestions.each do |user| %>
+  <%= link_to user.email, user_path(user.id) %>
+  <br>
+<% end %>
+<br>
+<h3>Tweet Something</h3>
+<%= form_for @tweet, url: tweet_path, method: :post do |f| %>
+  <%= f.text_field :content, placeholder: 'tweet' %>
+  <%= f.submit 'tweet' %>
+<% end  %>
